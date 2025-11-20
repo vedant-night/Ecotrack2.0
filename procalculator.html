@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ProCarbon Footprint Report (India)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc;
+        }
+        .section-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #10b981; 
+        }
+        input[type="number"], select {
+            border: 1px solid #d1d5db;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        input[type="number"]:focus, select:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+            outline: none;
+        }
+        .scope-badge {
+            font-size: 0.75rem;
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        .scope-1 { background-color: #fee2e2; color: #ef4444; } 
+        .scope-2 { background-color: #fef3c7; color: #f59e0b; }
+        .scope-3 { background-color: #dbeafe; color: #3b82f6; } 
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 28px;
+        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px;
+            background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #10b981; }
+        input:focus + .slider { box-shadow: 0 0 1px #10b981; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+                * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(60%);
+        }
+
+        header {
+            background: rgba(143, 238, 156, 0.25);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 45px;
+            font-style: oblique;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 70px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            margin-left: 25px;
+            font-size: 17px;
+            font-weight: bold;
+            padding-left: 30px;
+        }
+        nav a:hover { color: #9effab; }
+
+        .login-box {
+            width: 500px;
+            height: 350px;
+            background: rgba(255,255,255,0.18);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 150px auto;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
+            color: white;
+            text-align: center;
+        }
+
+        .login-box h2 { 
+            color: #b4ffbf;
+            font-size: xx-large;
+         }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 6px;
+            border: none;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #27ae60;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .login-box button:hover {
+            background: #1d8c4e;
+        }
+
+        .signup-text { margin-top: 15px; }
+        .signup-text a {
+            color: #caffc3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .why-choose {
+    background: #bff09f;
+    padding: 60px 0;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+        .why-choose h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a2b3c;
+}
+
+       .why-choose .subtitle {
+    margin: 10px auto 40px;
+    max-width: 650px;
+    color: #475569;
+    font-size: 16px;
+}
+
+       .features {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+    .feature-box {
+    max-width: 250px;
+    text-align: center;
+}
+
+    .icon-circle {
+    width: 80px;
+    height: 80px;
+    background: #0d5936; 
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+}
+
+    .icon-circle img {
+    width: 40px;
+    height: 40px;
+}
+
+    .feature-box h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a2b3c;
+}
+
+    .feature-box p {
+    margin-top: 8px;
+    color: #475569;
+    font-size: 14px;
+}
+
+.calculator-mode {
+    text-align: center;
+    padding: 60px 0;
+    background: #f7f9fb;
+    font-family: Arial, sans-serif;
+}
+
+.calculator-mode h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a2b3c;
+}
+
+.subtext {
+    margin-top: 10px;
+    color: #475569;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mode-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.mode-box {
+    width: 320px;
+    background: #ffffff;
+    padding: 30px 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    position: relative;
+}
+
+.premium-badge {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: #ffb300;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.icon-circle-green, .icon-circle-yellow {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-circle-green {
+    background: #0d5936;
+}
+
+.icon-circle-yellow {
+    background: #ffb300;
+}
+
+.icon-circle-green img,
+.icon-circle-yellow img {
+    width: 40px;
+}
+
+.mode-box h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1b2b3a;
+}
+
+.tagline {
+    color: #475569;
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 36px;
+    margin: 10px 0;
+}
+
+.free {
+    color: #0d5936;
+}
+
+.paid {
+    color: #ffb300;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin: 20px 0;
+}
+
+.features-list li {
+    margin: 8px 0;
+    color: #334155;
+    font-size: 15px;
+}
+
+    .simple-btn, .detailed-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+    .simple-btn {
+    background: #0d5936;
+    color: white;
+
+}
+    .detailed-btn {
+    background: #ffb300;
+    color: white;
+}
+
+
+        footer {
+            background: rgba(171, 250, 164, 0.45);
+            padding: 20px;
+            text-align: center;
+            color: rgb(20, 20, 20);
+            margin-top: 50px;
+            font-size: 20px;
+
+        }
+
+        footer a { color: #161616; text-decoration: none; }
+
+        .contact-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding-left: 250px;
+
+        }
+
+        .contact-button {
+            background-color: #1aae3f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background-color: #148c32;
+        }
+
+        .chat-widget-container {
+            position: fixed; 
+            bottom: 20px;
+            right: 20px;
+            transform: translateX(120%); 
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+            z-index: 1000;
+        }
+
+        .chat-widget-container.open {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .chat-dialogue-box {
+            width: 320px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header-top {
+            background-color: #1aae3f;
+            height: 50px;
+        }
+
+        .chat-card {
+            background-color: #fff;
+            padding: 20px;
+            margin: 0 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transform: translateY(-30px);
+            z-index: 10;
+        }
+
+        .chat-card h2 {
+            color: #1aae3f;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .chat-card .hand-wave {
+            font-size: 24px;
+            display: inline-block;
+            animation: wave-animation 2s infinite;
+        }
+
+        .chat-card p {
+            color: #444;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .new-conversation {
+            display: flex;
+            position: absolute;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            background-color: #f7f7f7;
+        }
+
+        .new-conversation:hover {
+            background-color: #ececec;
+        }
+
+        .new-conversation-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .new-conversation-text strong {
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .new-conversation-text small {
+            color: #888;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        .new-conversation-icon {
+            color: #1aae3f;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .chat-footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            background-color: #fff;
+            border-top: 1px solid #eee;
+            position: relative;
+            z-index: 5;
+        }
+
+        .chat-footer span {
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+        }
+
+
+        .down-arrow-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #1aae3f;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1001;
+            transition: opacity 0.3s;
+        }
+
+        @keyframes wave-animation {
+            0% { transform: rotate(0.0deg) }
+            10% { transform: rotate(14.0deg) }
+            20% { transform: rotate(-8.0deg) }
+            30% { transform: rotate(14.0deg) }
+            40% { transform: rotate(-4.0deg) }
+            50% { transform: rotate(10.0deg) }
+            60% { transform: rotate(0.0deg) }
+            100% { transform: rotate(0.0deg) }
+        }
+    </style>
+    <script>
+        // Carbon Emission Factors (in kg CO2e per unit) - India Specific
+        const FACTORS = {
+            // Scope 1 (Direct)
+            NAT_GAS_SCM: 1.83, // Piped Natural Gas (PNG) SCM factor (approx. 1.83 kgCO2e/SCM)
+            DIESEL_LITRE: 2.68, // Diesel used in DG sets (approx. 2.68 kgCO2e/Litre)
+            
+            // Scope 2 (Indirect - Purchased Energy)
+            ELECTRICITY_KWH: 0.73, // India Grid Emission Factor (approx. 0.73 kgCO2e/kWh)
+            
+            // Scope 3 (Other Indirect)
+            CAR_KG_KM: 0.15, // Personal Car (Petrol/Diesel Average)
+            BIKE_KG_KM: 0.04, // Two-wheeler/Scooter Average
+            FLIGHT_SHORT_HAUL: 100, // Estimate per flight
+            FLIGHT_LONG_HAUL: 1000, // Estimate per flight
+            WASTE_KG: 0.25, // Avg. factor for municipal waste (in kg CO2e per kg of waste)
+
+            // Offsets
+            TREE_OFFSET_KG: 20, // Avg. kg CO2 sequestered per young tree per year
+            
+            // EV Adjustment (Scope 3 reduction on car footprint)
+            EV_REDUCTION_FACTOR: 0.90, // 90% cleaner than average car
+        };
+
+        // Typology Comparison Factors
+        const TYPOLOGY_FACTORS = {
+            'small_apartment': 1.0,
+            'medium_flat': 1.25,
+            'large_house': 1.8,
+        };
+
+        const MAX_RETRIES = 3;
+        const INITIAL_DELAY = 1000;
+        const WEEKS_IN_YEAR = 52.14;
+        const MONTHS_IN_YEAR = 12;
+
+        function toMetricTons(kg) {
+            return kg / 1000;
+        }
+        function getStarRating(tons) {
+            const starEmpty = '☆';
+            const starFull = '★';
+
+            let rating = '';
+            let descriptor = '';
+
+            // Benchmarked against India's average (~2.4 mt)
+            if (tons <= 0.8) {
+                rating = starFull.repeat(5);
+                descriptor = 'Excellent (Target 5/5)';
+            } else if (tons <= 1.8) {
+                rating = starFull.repeat(4) + starEmpty;
+                descriptor = 'Very Good (Above Average)';
+            } else if (tons <= 3.0) {
+                rating = starFull.repeat(3) + starEmpty.repeat(2);
+                descriptor = 'Average for India';
+            } else if (tons <= 5.0) {
+                rating = starFull.repeat(2) + starEmpty.repeat(3);
+                descriptor = 'Needs Improvement';
+            } else {
+                rating = starFull + starEmpty.repeat(4);
+                descriptor = 'High Footprint';
+            }
+
+            return `<span class="text-yellow-500">${rating}</span> ${descriptor}`;
+        }
+        async function fetchWithBackoff(apiCall, retries = 0, delay = INITIAL_DELAY) {
+            try {
+                return await apiCall();
+            } catch (error) {
+                if (retries < MAX_RETRIES) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithBackoff(apiCall, retries + 1, delay * 2);
+                } else {
+                    console.error("API call failed after maximum retries.", error);
+                    throw new Error("Failed to connect to the external service.");
+                }
+            }
+        }
+
+        async function generateProfessionalReport(reportData) {
+            // Construct a detailed prompt including all key data for context
+            const userQuery = `
+                Based on the following annual carbon footprint data (in metric tons CO2e) for a user in India:
+                - Dwelling Type: ${reportData.typology}
+                - Total Net Footprint: ${reportData.netTons.toFixed(2)} mt
+                - Total Gross Footprint: ${reportData.grossTons.toFixed(2)} mt
+                - Total Offset: ${reportData.offsetTons.toFixed(2)} mt
+                - Scope 1 (Direct): ${reportData.scope1Tons.toFixed(2)} mt (${reportData.scope1Percent}%)
+                - Scope 2 (Electricity): ${reportData.scope2Tons.toFixed(2)} mt (${reportData.scope2Percent}%)
+                - Scope 3 (Travel/Waste): ${reportData.scope3Tons.toFixed(2)} mt (${reportData.scope3Percent}%)
+                - Comparison to Average Flat Home Energy: ${reportData.typologyComparisonTons.toFixed(2)} mt
+
+                Provide a structured report including a "Detailed Insight" paragraph and a "Professional Recommendation" paragraph. Focus the recommendation on the most impactful area (highest percentage scope) and use the building typology comparison for context.
+            `;
+            
+            const systemPrompt = "You are a professional GHG Protocol consultant and sustainability advisor in India. Respond with two distinct sections: 'Detailed Insight' and 'Professional Recommendation'. Use clear, formal, and actionable language.";
+            const apiKey = ""
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            const apiCall = async () => {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            };
+
+            try {
+                const result = await fetchWithBackoff(apiCall);
+                return result.candidates?.[0]?.content?.parts?.[0]?.text || "Report generation failed.";
+            } catch (error) {
+                console.error("Error during LLM analysis:", error);
+                return "Could not generate professional report due to a connection error.";
+            }
+        }
+
+        async function calculateCarbonFootprint() {
+            // --- 1. Get Inputs ---
+            const typology = document.getElementById('typology').value;
+            const typologyFactor = TYPOLOGY_FACTORS[typology];
+            
+            // Home Inputs (Monthly)
+            const electricity = parseFloat(document.getElementById('electricity').value) || 0;
+            const naturalGasSCM = parseFloat(document.getElementById('naturalGasSCM').value) || 0;
+            const dieselLitre = parseFloat(document.getElementById('dieselLitre').value) || 0;
+            
+            // Transport/Waste Inputs (Weekly/Annual)
+            let carKm = parseFloat(document.getElementById('carKm').value) || 0;
+            const bikeKm = parseFloat(document.getElementById('bikeKm').value) || 0;
+            const isEV = document.getElementById('isEV').checked;
+            const shortFlights = parseFloat(document.getElementById('shortFlights').value) || 0;
+            const longFlights = parseFloat(document.getElementById('longFlights').value) || 0;
+            const wasteKg = parseFloat(document.getElementById('wasteKg').value) || 0;
+            
+            // Offset Inputs (Annual)
+            const treesPlanted = parseFloat(document.getElementById('treesPlanted').value) || 0;
+
+            // --- 2. Calculate Scopes (in kg CO2e) ---
+            
+            // Scope 1: Direct Emissions (Gas, On-site Fuel)
+            const natGasKg = (naturalGasSCM * FACTORS.NAT_GAS_SCM) * MONTHS_IN_YEAR;
+            const dieselKg = (dieselLitre * FACTORS.DIESEL_LITRE) * MONTHS_IN_YEAR;
+            const scope1KgCO2 = natGasKg + dieselKg;
+
+            // Scope 2: Purchased Electricity
+            const electricityKg = (electricity * FACTORS.ELECTRICITY_KWH) * MONTHS_IN_YEAR;
+            const scope2KgCO2 = electricityKg;
+            
+            // Scope 3: Other Indirect (Transport, Waste)
+            let carFootprint = (carKm * FACTORS.CAR_KG_KM) * WEEKS_IN_YEAR;
+            if (isEV) { carFootprint *= (1 - FACTORS.EV_REDUCTION_FACTOR); }
+            
+            const bikeFootprint = (bikeKm * FACTORS.BIKE_KG_KM) * WEEKS_IN_YEAR;
+            const flightsKg = (shortFlights * FACTORS.FLIGHT_SHORT_HAUL) + (longFlights * FACTORS.FLIGHT_LONG_HAUL);
+            const wasteFootprint = (wasteKg * FACTORS.WASTE_KG) * WEEKS_IN_YEAR;
+            
+            const scope3KgCO2 = carFootprint + bikeFootprint + flightsKg + wasteFootprint;
+
+            // --- 3. Final Calculations ---
+            const totalGrossKgCO2 = scope1KgCO2 + scope2KgCO2 + scope3KgCO2;
+            const offsetKgCO2 = treesPlanted * FACTORS.TREE_OFFSET_KG;
+            const netKgCO2 = Math.max(0, totalGrossKgCO2 - offsetKgCO2);
+
+            // Corrected variable declarations
+            const grossMetricTons = toMetricTons(totalGrossKgCO2);
+            const netMetricTons = toMetricTons(netKgCO2); // <--- ERROR WAS HERE (reference to netTons when variable was netMetricTons)
+            const offsetMetricTons = toMetricTons(offsetKgCO2);
+            
+            const scope1Tons = toMetricTons(scope1KgCO2);
+            const scope2Tons = toMetricTons(scope2KgCO2);
+            const scope3Tons = toMetricTons(scope3KgCO2);
+            
+            // Percentages
+            const scope1Percent = grossMetricTons > 0 ? ((scope1Tons / grossMetricTons) * 100).toFixed(1) : 0;
+            const scope2Percent = grossMetricTons > 0 ? ((scope2Tons / grossMetricTons) * 100).toFixed(1) : 0;
+            const scope3Percent = grossMetricTons > 0 ? ((scope3Tons / grossMetricTons) * 100).toFixed(1) : 0;
+            
+            // Building Typology Comparison (Compare energy use to the average 'Medium Flat')
+            const typologyComparisonTons = toMetricTons(scope1KgCO2 + scope2KgCO2) / typologyFactor * TYPOLOGY_FACTORS['medium_flat'];
+
+            // Store report data for LLM
+            const reportData = {
+                typology: typology.replace('_', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+                netTons: netMetricTons, // <--- Corrected name here
+                grossTons: grossMetricTons, 
+                offsetTons: offsetMetricTons,
+                scope1Tons, scope2Tons, scope3Tons,
+                scope1Percent, scope2Percent, scope3Percent,
+                typologyComparisonTons
+            };
+
+            // --- 4. Display Results ---
+            const resultDiv = document.getElementById('result');
+            const reportDiv = document.getElementById('report');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const starRating = getStarRating(netMetricTons);
+
+            resultDiv.innerHTML = `
+                <div class="text-xl font-semibold mb-3 border-b pb-1 text-gray-800">GHG Footprint Summary (Annual)</div>
+
+                <!-- Overall Rating -->
+                <div class="mb-4 p-3 bg-indigo-50 rounded-lg shadow-inner">
+                    <p class="text-lg font-bold text-gray-800">Environmental Rating (Net Footprint):</p>
+                    <p class="text-3xl font-extrabold text-indigo-700 mt-1">${starRating}</p>
+                </div>
+
+                <!-- Scope Breakdown -->
+                <div class="space-y-3 mb-6">
+                    <h3 class="text-lg font-bold text-gray-800">Emission Breakdown by GHG Scope (Gross)</h3>
+                    
+                    ${createScopeRow('Scope 2', scope2Tons, scope2Percent, 'Purchased Electricity', 'f59e0b', 'fef3c7')}
+                    ${createScopeRow('Scope 3', scope3Tons, scope3Percent, 'Travel & Waste', '3b82f6', 'dbeafe')}
+                    ${createScopeRow('Scope 1', scope1Tons, scope1Percent, 'Direct Emissions (Gas, Diesel)', 'ef4444', 'fee2e2')}
+
+                    <div class="mt-3 pt-2 border-t border-gray-300 flex justify-between items-center text-lg font-semibold">
+                        <span>Total Gross Footprint: </span>
+                        <span class="text-gray-800">${grossMetricTons.toFixed(2)} mt</span>
+                    </div>
+                </div>
+
+                <!-- Typology Comparison -->
+                <div class="mt-4 p-4 rounded-lg bg-gray-50 shadow-inner border border-gray-200">
+                    <h4 class="font-semibold text-gray-700">Building Typology Comparison (Home Energy)</h4>
+                    <p class="text-sm text-gray-600 mt-1">
+                        Your energy footprint is **${(scope1Tons + scope2Tons).toFixed(2)} mt**. An average **Medium-sized Flat** has an estimated energy footprint of **${typologyComparisonTons.toFixed(2)} mt** for the same inputs.
+                    </p>
+                    <p class="text-xs text-gray-500 mt-2">
+                        This comparison adjusts your energy use based on your selected dwelling size (${reportData.typology}).
+                    </p>
+                </div>
+
+                <!-- Final Net -->
+                <div class="mt-6 p-4 rounded-lg bg-green-50 shadow-xl border border-green-200">
+                    <p class="text-2xl font-extrabold text-gray-800">
+                        Net Annual Footprint: <span class="text-emerald-600">${netMetricTons.toFixed(2)}</span> metric tons CO2e
+                    </p>
+                    <p class="text-sm text-green-700 mt-1">
+                        (Offset of -${offsetMetricTons.toFixed(2)} mt applied from ${treesPlanted} trees.)
+                    </p>
+                </div>
+            `;
+            
+            // --- 5. Generate Professional Report ---
+            reportDiv.innerHTML = '';
+            loadingIndicator.classList.remove('hidden');
+
+            try {
+                const reportText = await generateProfessionalReport(reportData);
+                
+                // Format the LLM output into distinct sections
+                const insight = reportText.includes("Detailed Insight:") ? reportText.split("Detailed Insight:")[1].split("Professional Recommendation:")[0].trim() : "Insight unavailable.";
+                const recommendation = reportText.includes("Professional Recommendation:") ? reportText.split("Professional Recommendation:")[1].trim() : "Recommendation unavailable.";
+
+                reportDiv.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="p-4 bg-white rounded-lg border border-gray-200">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2 border-b pb-1">Detailed Insight</h3>
+                            <p class="text-gray-700">${insight}</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border-2 border-emerald-400 shadow-lg">
+                            <h3 class="text-xl font-bold text-emerald-700 mb-2 border-b pb-1">Professional Recommendation</h3>
+                            <p class="text-gray-700">${recommendation}</p>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                reportDiv.innerHTML = `<p class="text-red-500">Error generating the professional report.</p>`;
+            } finally {
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+        function createScopeRow(scopeName, tons, percent, description, colorHex, bgColorHex) {
+            return `
+                <div class="flex justify-between items-center p-3 rounded-lg" style="background-color: ${bgColorHex};">
+                    <div>
+                        <span class="text-sm font-bold" style="color: #${colorHex};">${scopeName}</span>
+                        <p class="text-xs text-gray-600">${description}</p>
+                    </div>
+                    <span class="font-extrabold text-lg" style="color: #${colorHex};">
+                        ${tons.toFixed(2)} mt <span class="text-sm">(${percent}%)</span>
+                    </span>
+                </div>
+            `;
+        }
+    </script>
+    <body>
+    <div class="video-bg">
+        <video autoplay muted loop>
+            <source src="c:\Users\lab103\Desktop\DRISHTI PROJECT\Project\PROJECT\2nd.mp4.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    </body>
+    <header>
+        <nav>
+        <div class="logo">
+            <a href="C:\Users\lab103\Desktop\DRISHTI PROJECT\Project\PROJECT\Home.html"><img src="c:\Users\lab103\Desktop\DRISHTI PROJECT\Project\PROJECT\Screenshot 2025-11-15 153050.png" ></a>
+        </div>
+        </nav>
+
+        <nav>
+            <a href="C:\Users\lab103\Desktop\DRISHTI PROJECT\Project\PROJECT\Home.html">Home</a>
+            <a href="C:\Users\lab103\Desktop\DRISHTI PROJECT\Project\PROJECT\Calculator.html">Calculator</a>
+            <a href="C:\Users\lab103\Desktop\DRISHTI PROJECT\Project\PROJECT\About.html">About</a>
+            <a href="C:\Users\lab103\Desktop\DRISHTI PROJECT\Project\PROJECT\Solutions.html">Solutions</a>
+            <a href="C:\Users\lab103\Desktop\DRISHTI PROJECT\Project\PROJECT\Complains.html">Complain</a>
+        </nav>
+
+
+    </header>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-8 text-center text-white">
+            GHG Protocol: Personal Footprint Report (India)
+        </h1>
+
+        <div id="inputs" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- HOUSING & SCOPE 1/2 -->
+            <div class="section-card">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">1. Home Energy & Direct (Scope 1 & 2)</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="typology" class="block text-sm font-medium text-gray-700 mb-1">Building Typology</label>
+                        <select id="typology">
+                            <option value="small_apartment">Small Apartment/Studio (Reference)</option>
+                            <option value="medium_flat" selected>Medium-sized Flat/Row House</option>
+                            <option value="large_house">Large Detached House</option>
+                        </select>
+                    </div>
+
+                    <p class="scope-badge scope-2">Scope 2: Purchased Electricity</p>
+                    <div>
+                        <label for="electricity" class="block text-sm font-medium text-gray-700 mb-1">Monthly Electricity (kWh)</label>
+                        <input type="number" id="electricity" placeholder="e.g., 500" min="0">
+                        <p class="text-xs text-gray-500 mt-1">Uses India Grid Factor (0.73 kg/kWh)</p>
+                    </div>
+
+                    <p class="scope-badge scope-1">Scope 1: Direct Emissions</p>
+                    <div>
+                        <label for="naturalGasSCM" class="block text-sm font-medium text-gray-700 mb-1">Monthly Piped Gas (SCM)</label>
+                        <input type="number" id="naturalGasSCM" placeholder="e.g., 5 (for cooking/heating)" min="0">
+                    </div>
+                    <div>
+                        <label for="dieselLitre" class="block text-sm font-medium text-gray-700 mb-1">Monthly Diesel Used (Litre for DG Set)</label>
+                        <input type="number" id="dieselLitre" placeholder="e.g., 10" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCOPE 3 (TRAVEL & WASTE) -->
+            <div class="section-card">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">2. Indirect Transport & Waste (Scope 3)</h2>
+                <div class="space-y-4">
+                    <p class="scope-badge scope-3">Scope 3: Other Indirect Emissions</p>
+
+                    <div>
+                        <label for="carKm" class="block text-sm font-medium text-gray-700 mb-1">Weekly Car Distance (Km)</label>
+                        <input type="number" id="carKm" placeholder="e.g., 200 (Fuel)" min="0">
+                    </div>
+                    
+                    <div>
+                        <label for="bikeKm" class="block text-sm font-medium text-gray-700 mb-1">Weekly 2-Wheeler Distance (Km)</label>
+                        <input type="number" id="bikeKm" placeholder="e.g., 100" min="0">
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <span class="text-sm font-medium text-gray-700">Is your Car Electric (EV)?</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="isEV" onclick="document.getElementById('carKm').placeholder = this.checked ? 'e.g., 200 (EV)' : 'e.g., 200 (Fuel)'">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="shortFlights" class="block text-sm font-medium text-gray-700 mb-1">Annual Short-Haul Flights (Round-trip)</label>
+                        <input type="number" id="shortFlights" placeholder="e.g., 2" min="0">
+                    </div>
+                    <div>
+                        <label for="longFlights" class="block text-sm font-medium text-gray-700 mb-1">Annual Long-Haul Flights (Round-trip)</label>
+                        <input type="number" id="longFlights" placeholder="e.g., 1" min="0">
+                    </div>
+
+                    <div>
+                        <label for="wasteKg" class="block text-sm font-medium text-gray-700 mb-1">Weekly Waste Generated (Kg)</label>
+                        <input type="number" id="wasteKg" placeholder="e.g., 5" min="0">
+                        <p class="text-xs text-gray-500 mt-1">Approx. factor for processing/decomposition.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OFFSETS -->
+            <div class="section-card md:col-span-2">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">3. Carbon Offsets</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="treesPlanted" class="block text-sm font-medium text-gray-700 mb-1">Number of Trees Planted (Annual Offset)</label>
+                        <input type="number" id="treesPlanted" placeholder="e.g., 10" min="0">
+                        <p class="text-xs text-gray-500 mt-1">Each tree offsets ~20 kg CO2e annually.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <button onclick="calculateCarbonFootprint()" class="px-8 py-3 bg-emerald-600 text-white font-bold rounded-full hover:bg-emerald-700 transition duration-300 shadow-lg shadow-emerald-500/50">
+                Generate Detailed GHG Report
+            </button>
+        </div>
+
+        <!-- RESULTS SECTION -->
+        <div class="mt-12 p-6 bg-white rounded-xl shadow-2xl border border-gray-100">
+            <h2 class="text-3xl font-extrabold mb-6 text-gray-900 border-b pb-2">Report Summary & Results</h2>
+            <div id="result" class="space-y-4 mb-6">
+                <p class="text-lg text-gray-600">Enter your data and click "Generate" to see your professional GHG Protocol report, including Scope breakdown and recommendations.</p>
+            </div>
+
+            <!-- Loading Indicator for Analysis -->
+            <div id="loadingIndicator" class="hidden flex items-center justify-center p-4 text-emerald-600">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Generating Professional Report & Recommendations...
+            </div>
+
+            <!-- LLM Analysis -->
+            <div id="report" class="mt-8 p-6 bg-emerald-50 rounded-xl border border-emerald-200">
+                <p class="text-gray-700">The professional report, insights, and recommendations will appear here after calculation.</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
