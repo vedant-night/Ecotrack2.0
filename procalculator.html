@@ -754,6 +754,35 @@
             const reportDiv = document.getElementById('report');
             const loadingIndicator = document.getElementById('loadingIndicator');
             const starRating = getStarRating(netMetricTons);
+            // --- VALIDATION CHECK ---
+const fields = [
+    'electricity',
+    'naturalGasSCM',
+    'carKm',
+    'bikeKm',
+    'shortFlights',
+    'longFlights',
+    'treesPlanted'
+];
+
+let isValid = true;
+
+fields.forEach(id => {
+    const field = document.getElementById(id);
+    if (field.value === "" || field.value === null) {
+        field.classList.add("border-red-500", "border-2");
+        isValid = false;
+    } else {
+        field.classList.remove("border-red-500", "border-2");
+    }
+});
+
+if (!isValid) {
+    alert("Please fill ALL fields before calculating your footprint.");
+    return; // stop the function
+}
+// --- END VALIDATION ---
+
 
             resultDiv.innerHTML = `
                 <div class="text-xl font-semibold mb-3 border-b pb-1 text-gray-800">GHG Footprint Summary (Annual)</div>
@@ -996,4 +1025,5 @@
 </body>
 
 </html>
+
 
