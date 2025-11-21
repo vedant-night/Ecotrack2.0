@@ -848,6 +848,34 @@
                 </div>
             </div>
         </div>
+// --- VALIDATION CHECK ---
+const fields = [
+    'electricity',
+    'naturalGasSCM',
+    'carKm',
+    'bikeKm',
+    'shortFlights',
+    'longFlights',
+    'treesPlanted'
+];
+
+let isValid = true;
+
+fields.forEach(id => {
+    const field = document.getElementById(id);
+    if (field.value === "" || field.value === null) {
+        field.classList.add("border-red-500", "border-2");
+        isValid = false;
+    } else {
+        field.classList.remove("border-red-500", "border-2");
+    }
+});
+
+if (!isValid) {
+    alert("Please fill ALL fields before calculating your footprint.");
+    return; // stop the function
+}
+// --- END VALIDATION ---
 
         <div class="text-center mt-8">
             <button onclick="calculateCarbonFootprint()" class="px-8 py-3 bg-emerald-600 text-white font-bold rounded-full hover:bg-emerald-700 transition duration-300 shadow-lg shadow-emerald-500/50">
@@ -886,4 +914,5 @@
 </body>
 
 </html>
+
 
